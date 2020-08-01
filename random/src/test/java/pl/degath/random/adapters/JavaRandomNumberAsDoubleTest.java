@@ -23,7 +23,7 @@ class JavaRandomNumberAsDoubleTest {
 
     @Test
     void shouldThrowExceptionWhenRandomNotSpecified() {
-        Throwable thrown = catchThrowable(() -> new JavaRandomNumberAsDouble(new Random()));
+        Throwable thrown = catchThrowable(() -> new JavaRandomNumberAsDouble(null));
 
         assertThat(thrown)
                 .isInstanceOf(NullPointerException.class)
