@@ -10,6 +10,11 @@ repositories {
 
 dependencies {
     def junitJupiterVersion = '5.6.2'
+    def jacksonVersion = '2.11.1'
+
+    implementation("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
+    implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
+    implementation("org.springframework:spring-web:5.2.8.RELEASE")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion")
