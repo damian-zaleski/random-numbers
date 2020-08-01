@@ -13,4 +13,11 @@ public class Validator {
             throw new ValidationException(message);
         }
     }
+
+    public static String notBlank(String value, String message) {
+        if (value == null || value.isBlank()) {
+            throw new ValidationException(message);
+        }
+        return value;
+    }
 }
