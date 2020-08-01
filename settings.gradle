@@ -1,3 +1,4 @@
 rootProject.name = 'random-numbers'
 include 'random'
+include 'application'
 
