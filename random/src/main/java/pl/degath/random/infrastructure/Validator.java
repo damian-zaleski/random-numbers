@@ -8,10 +8,9 @@ public class Validator {
         throw new UnsupportedOperationException();
     }
 
-    public static List<? extends Number> hasSizeBiggerThanOne(List<? extends Number> suppliers, String message) {
+    public static void hasSizeBiggerThanOne(List<? extends Number> suppliers, String message) {
         if (suppliers == null || suppliers.size() <= 1) {
             throw new ValidationException(message);
         }
-        return suppliers;
     }
 }
