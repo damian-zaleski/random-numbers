@@ -1,16 +1,16 @@
 package pl.degath.application.random;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import pl.degath.random.RandomNumber;
+import pl.degath.random.Sum;
 
+/**
+ * Random operations.
+ */
 public interface RandomApi {
 
-    @ApiOperation("Get sum from all random suppliers.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Successfully fetched a sum from all random suppliers."),
-            @ApiResponse(code = 400, message = "Validation failed."),
-    })
-    RandomNumber getSum();
+    /**
+     * Get a {@link Sum sum} from all suppliers
+     *
+     * @return a {@link Sum sum}, if at least two suppliers are found.
+     */
+    Sum getSum();
 }

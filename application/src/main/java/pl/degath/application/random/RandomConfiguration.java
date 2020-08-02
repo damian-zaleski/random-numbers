@@ -12,7 +12,9 @@ import pl.degath.random.adapters.JavaRandomNumberAsLong;
 import pl.degath.random.adapters.RandomOrgRandomNumber;
 import pl.degath.random.infrastructure.HttpClient;
 import pl.degath.random.infrastructure.RestTemplateHttpClient;
+import pl.degath.random.ports.RandomNumberSupplier;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,36 +23,24 @@ import java.util.Random;
 @Configuration
 public class RandomConfiguration {
 
-    @Bean
-    public ApplicationService applicationService(JavaRandomNumberAsDouble randomDouble,
-                                                 JavaRandomNumberAsLong randomLong,
-                                                 RandomOrgRandomNumber randomOrgRandomNumber) {
-        return new ApplicationService(List.of(randomDouble, randomLong, randomOrgRandomNumber));
-    }
+    private static final String RANDOM_ORG_URL = "https://www.random.org/integers/?num=1&min=1&max=10000&col=1&base=10&format=html&rnd=new&format=plain";
 
     @Bean
-    public JavaRandomNumberAsDouble javaRandomDouble(Random random) {
-        return new JavaRandomNumberAsDouble(random);
-    }
+    public List<RandomNumberSupplier<? extends Number>> suppliers(Random random, HttpClient httpClient) {
+        var javaRandomDouble = new JavaRandomNumberAsDouble(random);
+        var javaRandomLong = new JavaRandomNumberAsLong(random);
+        var randomOrgInteger = new RandomOrgRandomNumber(RANDOM_ORG_URL, httpClient);
 
-    @Bean
-    public JavaRandomNumberAsLong javaRandomLong(Random random) {
-        return new JavaRandomNumberAsLong(random);
+        return List.of(javaRandomDouble, javaRandomLong, randomOrgInteger);
     }
 
     @Bean
     public Random random() {
-        return new Random();
+        return new SecureRandom();
     }
 
     @Bean
-    public RandomOrgRandomNumber randomOrgRandomNumber(HttpClient httpClient) {
-        var apiUrl = "https://www.random.org/integers/?num=1&min=1&max=10000&col=1&base=10&format=html&rnd=new&format=plain";
-        return new RandomOrgRandomNumber(apiUrl, httpClient);
-    }
-
-    @Bean
-    public RestTemplateHttpClient restTemplateHttpClient() {
+    public HttpClient restTemplateHttpClient() {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
         converter.setSupportedMediaTypes(Collections.singletonList(MediaType.TEXT_PLAIN));
         List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
@@ -58,5 +48,10 @@ public class RandomConfiguration {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setMessageConverters(messageConverters);
         return new RestTemplateHttpClient(restTemplate);
+    }
+
+    @Bean
+    public ApplicationService applicationService(List<RandomNumberSupplier<? extends Number>> suppliers) {
+        return new ApplicationService(suppliers);
     }
 }

@@ -1,4 +1,5 @@
 # random-numbers
+Combining random numbers from multiple sources (recruitment task).
 - Task description can be found here: [task description](TASK.md)
 
 #### Steps to run with docker

@@ -1,7 +1,7 @@
 package pl.degath.random.infrastructure;
 
-import pl.degath.random.RandomNumber;
+import pl.degath.random.Sum;
 
 public interface GetSumFromAllSourcesHandler {
-    RandomNumber getSumFromAllSources();
+    Sum getSumFromAllSources();
 }

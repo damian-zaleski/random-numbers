@@ -16,10 +16,10 @@ public class ApplicationService implements GetSumFromAllSourcesHandler {
     }
 
     @Override
-    public RandomNumber getSumFromAllSources() {
+    public Sum getSumFromAllSources() {
         var numbers = suppliers.stream()
                 .map(RandomNumberSupplier::get)
                 .collect(Collectors.toList());
-        return new RandomNumber(numbers);
+        return new Sum(numbers);
     }
 }

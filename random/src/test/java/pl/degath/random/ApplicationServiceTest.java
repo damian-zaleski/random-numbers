@@ -48,7 +48,7 @@ class ApplicationServiceTest {
     void shouldGetRandomNumberWithTwoSuppliers() {
         applicationService = new ApplicationService(withTwoSuppliers());
 
-        RandomNumber result = applicationService.getSumFromAllSources();
+        Sum result = applicationService.getSumFromAllSources();
 
         assertThat(valueFrom(result)).isEqualTo("3");
     }
@@ -57,7 +57,7 @@ class ApplicationServiceTest {
     void shouldGetRandomNumberWithMultipleSuppliers() {
         applicationService = new ApplicationService(withMultipleSuppliers());
 
-        RandomNumber result = applicationService.getSumFromAllSources();
+        Sum result = applicationService.getSumFromAllSources();
 
         assertThat(valueFrom(result)).isEqualTo("6");
     }
@@ -66,12 +66,12 @@ class ApplicationServiceTest {
     void shouldGetRandomNumberWithSuppliersWithDifferentTypes() {
         applicationService = new ApplicationService(withDifferentTypesOfSuppliers());
 
-        RandomNumber result = applicationService.getSumFromAllSources();
+        Sum result = applicationService.getSumFromAllSources();
 
         assertThat(valueFrom(result)).isEqualTo("655.3");
     }
 
-    private String valueFrom(RandomNumber result) {
+    private String valueFrom(Sum result) {
         return result.getValue().toString();
     }
 }
